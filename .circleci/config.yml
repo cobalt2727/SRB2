@@ -34,6 +34,9 @@ jobs:
             apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0B1702D71499D9C25F986507F240F4449D3B0EC6
             echo "deb http://ppa.launchpad.net/stjr/srb2/ubuntu trusty main" >> /etc/apt/sources.list
       - run:
+          name: Make APT cache folder
+          command: mkdir -p /root/.cache/apt/partial
+      - run:
           name: Update APT listing
           command: apt-get -qq update
       - run:
