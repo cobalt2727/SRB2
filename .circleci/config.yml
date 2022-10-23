@@ -26,6 +26,9 @@ jobs:
       - run:
           name: Add i386 arch
           command: dpkg --add-architecture i386
+      - run
+          name: Dump APT config
+          command: apt-config dump
       - run:
           name: Add STJr PPA
           command: |
