@@ -50,7 +50,7 @@ jobs:
             - v1-SRB2-APT
       - run:
           name: Install SDK
-          command: apt-get -o Dir::Cache="/root/.cache/apt" -o Dir::Cache::pkgcache="pkgcache.bin" -qq -y --no-install-recommends install git build-essential nasm libpng-dev:i386 libsdl2-mixer-dev:i386 libgme-dev:i386 libcurl4-openssl-dev:i386 libopenmpt-dev:i386 gettext ccache wget gcc-multilib upx openssh-client
+          command: apt-get -o Dir::Cache="/root/.cache/apt" -o Dir::Cache::pkgcache="/root/.cache/apt/pkgcache.bin" -qq -y --no-install-recommends install git build-essential nasm libpng-dev:i386 libsdl2-mixer-dev:i386 libgme-dev:i386 libcurl4-openssl-dev:i386 libopenmpt-dev:i386 gettext ccache wget gcc-multilib upx openssh-client
       - run:
           name: list APT cache
           command: ls -halR /root/.cache/apt
