@@ -27,9 +27,6 @@ jobs:
           name: Add i386 arch
           command: dpkg --add-architecture i386
       - run:
-          name: Dump APT config
-          command: apt-config dump
-      - run:
           name: Add STJr PPA
           command: |
             apt-get -qq update
@@ -41,7 +38,7 @@ jobs:
           command: mkdir -p /root/.cache/apt/archives/partial
       - run:
           name: Make APT cache usage by _apt
-          command: chown _apt /root/.cache/apt/archives/partial
+          command: chown -Rv _apt:root /root/.cache/apt/archives/partial
       - run:
           name: Update APT listing
           command: apt-get -qq update
@@ -53,12 +50,12 @@ jobs:
             - v1-SRB2-APT
       - run:
           name: Install SDK
-          command: apt-get -o Dir::Cache="/root/.cache/apt" -o Dir::Cache::pkgcache="/root/.cache/apt/pkgcache.bin" -qq -y --no-install-recommends install git build-essential nasm libpng-dev:i386 libsdl2-mixer-dev:i386 libgme-dev:i386 libcurl4-openssl-dev:i386 libopenmpt-dev:i386 gettext ccache wget gcc-multilib upx openssh-client
+          command: apt-get -o Dir::Cache="/root/.cache/apt" -qq -y --no-install-recommends install git build-essential nasm libpng-dev:i386 libsdl2-mixer-dev:i386 libgme-dev:i386 libcurl4-openssl-dev:i386 libopenmpt-dev:i386 gettext ccache wget gcc-multilib upx openssh-client
       - run:
-          name: list APT cache
-          command: ls -halR /root/.cache/apt
+          name: make md5sum 
+          command: find /root/.cache/apt/archives -type f -print0 | sort -z | xargs -r0 md5sum > /root/.cache/apt_archives.md5
       - save_cache:
-          key: v1-SRB2-APT-{{ checksum "/root/.cache/apt/pkgcache.bin" }}
+          key: v1-SRB2-APT-{{ checksum "/root/.cache/apt_archives.md5" }}
           paths:
             - /root/.cache/apt
       - checkout
@@ -72,8 +69,8 @@ jobs:
           name: rebuild depend
           command: make -C src LINUX=1 clean
       - run:
-          name: make master deend
-          command: find make/linux/SDL/deps/ -type f -print0 | sort -z | xargs -r0 cat > make/linux/SDL.deps
+          name: make master depend file
+          command: ind make/linux/SDL/deps/ -type f -print0 | sort -z | xargs -r0 cat > make/linux/SDL.deps
       - restore_cache:
           keys:
             - v1-SRB2-{{ .Branch }}-{{ checksum "make/linux/SDL.deps" }}
