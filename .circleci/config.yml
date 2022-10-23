@@ -59,9 +59,12 @@ jobs:
       - run:
           name: rebuild depend
           command: make -C src LINUX=1 clean
+      - run
+          name: make master deend
+          command: find make/linux/SDL/deps/ -type f -print0 | sort -z | xargs -r0 cat > make/linux/SDL.deps
       - restore_cache:
           keys:
-            - v1-SRB2-{{ .Branch }}-{{ checksum "objs/Linux/SDL/Release/depend.dep" }}
+            - v1-SRB2-{{ .Branch }}-{{ checksum "objs/Linux/SDL.dep" }}
       - run:
           name: Compile
           command: make -C src LINUX=1 ERRORMODE=1 -k
@@ -69,6 +72,6 @@ jobs:
           path: /root/SRB2/bin/Linux/Release/
           destination: bin
       - save_cache:
-          key: v1-SRB2-{{ .Branch }}-{{ checksum "objs/Linux/SDL/Release/depend.dep" }}
+          key: v1-SRB2-{{ .Branch }}-{{ checksum "objs/Linux/SDL.dep" }}
           paths:
             - /root/.ccache
