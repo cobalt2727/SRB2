@@ -41,7 +41,7 @@ jobs:
           command: mkdir -p /root/.cache/apt/archives/partial
       - run:
           name: Make APT cache usage by _apt
-          commmand: chown _apt /root/.cache/apt/archives/partial
+          command: chown _apt /root/.cache/apt/archives/partial
       - run:
           name: Update APT listing
           command: apt-get -qq update
