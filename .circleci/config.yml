@@ -70,7 +70,7 @@ jobs:
           command: make -C src LINUX=1 clean
       - run:
           name: make master depend file
-          command: ind make/linux/SDL/deps/ -type f -print0 | sort -z | xargs -r0 cat > make/linux/SDL.deps
+          command: find make/linux/SDL/deps/ -type f -print0 | sort -z | xargs -r0 cat > make/linux/SDL.deps
       - restore_cache:
           keys:
             - v1-SRB2-{{ .Branch }}-{{ checksum "make/linux/SDL.deps" }}
