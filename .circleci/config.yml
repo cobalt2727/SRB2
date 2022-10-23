@@ -59,7 +59,7 @@ jobs:
       - run:
           name: rebuild depend
           command: make -C src LINUX=1 clean
-      - run
+      - run:
           name: make master deend
           command: find make/linux/SDL/deps/ -type f -print0 | sort -z | xargs -r0 cat > make/linux/SDL.deps
       - restore_cache:
