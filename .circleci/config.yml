@@ -49,7 +49,7 @@ jobs:
           name: Install SDK
           command: apt-get -o dir::cache::archives="/root/.cache/apt" -qq -y --no-install-recommends install git build-essential nasm libpng-dev:i386 libsdl2-mixer-dev:i386 libgme-dev:i386 libcurl4-openssl-dev:i386 libopenmpt-dev:i386 gettext ccache wget gcc-multilib upx openssh-client
       - save_cache:
-          key: v1-SRB2-APT
+          key: v1-SRB2-APT-{{ checksum "/root/.cache/apt/pkgcache.bin" }}
           paths:
             - /root/.cache/apt
       - checkout
