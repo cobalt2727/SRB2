@@ -38,7 +38,10 @@ jobs:
             echo "deb http://ppa.launchpad.net/stjr/srb2/ubuntu trusty main" >> /etc/apt/sources.list
       - run:
           name: Make APT cache folder
-          command: mkdir -p /root/.cache/apt/partial
+          command: mkdir -p /root/.cache/apt/archives/partial
+      - run:
+          name: Make APT cache usage by _apt
+          commmand: chown _apt /root/.cache/apt/archives/partial
       - run:
           name: Update APT listing
           command: apt-get -qq update
